@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
+import "./App.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import SignUp from "./Routing/SignUp/SignUp";
+import Puisi from "./Routing/Puisi";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,6 +14,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/puisi" element={<Puisi />}>
+          <Route path=":id" element={<Puisi />} />
+        </Route>
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>

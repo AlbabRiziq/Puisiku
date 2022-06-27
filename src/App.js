@@ -1,18 +1,11 @@
-import Verifikasi from "./Components/Verifikasi/Verifikasi";
-import Login from "./Routing/Login/Login";
+import { useParams } from "react-router-dom";
+import Home from "./Routing/Home/Home";
 
 function App() {
-  if (localStorage.getItem("username") && localStorage.getItem("no")) {
-    return (
-      <div>
-        <h1>HOME</h1>
-      </div>
-    );
-  }
-
+  const id = useParams().id;
   return (
-    <div className="App">
-      <Login />
+    <div className="App flex items-center justify-center">
+      <Home id={id} />
     </div>
   );
 }

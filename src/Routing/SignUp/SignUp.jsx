@@ -1,6 +1,6 @@
 function SignUp() {
   return (
-    <div className="flex w-screen items-center flex-col py-10 md:scale-125 md:mt-10">
+    <div className="flex w-screen items-center flex-col py-10 md:scale-125 md:mt-20">
       <h1 className="text-[#7F867B] font-extrabold text-3xl">PUISIKU</h1>
       <form className="mt-10" autoComplete="off">
         <h1 className="text-[#7F867B] font-bold mt-10 text-xl text-center">
@@ -15,7 +15,7 @@ function SignUp() {
           type="text"
           name="username"
           id="username"
-          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none "
+          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
         <br />
@@ -27,7 +27,7 @@ function SignUp() {
           type="text"
           name="nama"
           id="nama"
-          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none "
+          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
         <br />
@@ -40,7 +40,7 @@ function SignUp() {
           type="password"
           name="password"
           id="password"
-          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none "
+          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
         <br />
@@ -53,7 +53,7 @@ function SignUp() {
           type="number"
           name="noWa"
           id="noWa"
-          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none "
+          className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
         <button className="bg-[#E3E4E0] p-2 px-5 rounded-md my-10">
