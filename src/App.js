@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Verifikasi from "./Components/Verifikasi/Verifikasi";
+import Login from "./Routing/Login/Login";
 
 function App() {
+  if (localStorage.getItem("username") && localStorage.getItem("no")) {
+    return (
+      <div>
+        <h1>HOME</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Login />
     </div>
   );
 }
