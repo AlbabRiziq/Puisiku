@@ -2,29 +2,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Share from "../../assets/img/share.png";
 import Copy from "../../assets/img/copy.png";
+import Setup from "../../config";
 
 function Home(props) {
   const [puisi, setPuisi] = useState("");
   const [author, setAuthor] = useState();
   const [judul, setJudul] = useState("");
-  const [showBtn, setShowBtn] = useState(false);
+  const [indexPuisi, setIndexPuisi] = useState();
   const [toggleShare, setToggleShare] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/puisi/acak`).then((res) => {
+    axios.get(`${Setup.apiEndoint}/puisi/acak`).then((res) => {
       console.log(res.data);
-      setPuisi(res.data.puisi);
-      setAuthor(res.data.author);
-      setJudul(res.data.title);
-      setShowBtn(true);
+      setPuisi(res.data.data.puisi);
+      setAuthor(res.data.data.author);
+      setJudul(res.data.data.title);
+      setIndexPuisi(res.data.index);
+      console.log(res.data);
     });
   }, []);
   const getPuisi = () => {
-    axios.get("http://localhost:8080/api/puisi/acak").then((res) => {
+    axios.get(`${Setup.apiEndoint}/puisi/acak`).then((res) => {
       console.log(res.data);
-      setPuisi(res.data.puisi);
-      setAuthor(res.data.author);
-      setJudul(res.data.title);
+      setPuisi(res.data.data.puisi);
+      setAuthor(res.data.data.author);
+      setJudul(res.data.data.title);
     });
   };
 
@@ -35,7 +37,6 @@ function Home(props) {
           <h1 className="font-bold text-[#7F867B] text-xl">{judul}</h1>
           <p className="text-[#7F867B] text-xs mt-5">{author}</p>
         </div>
-        <h3 className="text-[#7F867B] print:hidden">Buat Puisi</h3>
       </section>
       <main className="text-[#7F867B] font-light text-sm mt-10">
         <p className="leading-6 whitespace-pre-wrap">{puisi}</p>
@@ -56,7 +57,15 @@ function Home(props) {
         </button>
         {!toggleShare && (
           <div className="flex items-center print:hidden">
-            <img src={Copy} alt="Salin link" className="h-10" />
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `localhost:3001/puisi/${indexPuisi}`
+                );
+              }}
+            >
+              <img src={Copy} alt="Salin link" className="h-10" />
+            </button>
             <button
               onClick={() => {
                 window.print();
@@ -67,6 +76,7 @@ function Home(props) {
             </button>
           </div>
         )}
+        <div></div>
       </div>
     </article>
   );

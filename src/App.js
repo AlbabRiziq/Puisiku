@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
 import Home from "./Routing/Home/Home";
+import Login from "./Routing/Login/Login";
+import SignUp from "./Routing/SignUp/SignUp";
 
 function App() {
-  const id = useParams().id;
   return (
     <div className="App flex items-center justify-center">
-      <Home id={id} />
+      <Login />
     </div>
   );
 }

@@ -1,6 +1,40 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Setup from "../../config";
 
 function Login() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  useEffect(() => {
+    console.log(username);
+    console.log(password);
+  }, [password, username]);
+
+  const login = () => {
+    axios({
+      url: `${Setup.apiEndoint}/login`,
+      method: "POST",
+      params: {
+        username: username,
+        password: password,
+      },
+    })
+      .then((res) => {
+        if (res.data.message === true) {
+          alert("Login Berhasil");
+        } else {
+          alert("GAGAL BANGGGGG");
+        }
+      })
+      .catch((err) => {
+        alert(
+          "Ada yang error bang, coba cek username dan password atau jaringan ente dan coba lagi"
+        );
+      });
+  };
+
   return (
     <div className="flex w-screen items-center flex-col py-10 md:scale-125 md:mt-20">
       <h1 className="text-[#7F867B] font-extrabold text-3xl">PUISIKU</h1>
@@ -10,15 +44,17 @@ function Login() {
         </h1>
         <br />
 
-        <label htmlFor="noWa" className="text-[#7F867B] font-semibold">
-          NO HP (Whatsapp) <br />{" "}
-          <span className="text-xs">ex : 62812345678901</span>
+        <label htmlFor="username" className="text-[#7F867B] font-semibold">
+          USERNAME
         </label>
         <br />
         <input
-          type="number"
-          name="noWa"
-          id="noWa"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+          type="text"
+          name="username"
+          id="username"
           className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
@@ -28,13 +64,20 @@ function Login() {
         </label>
         <br />
         <input
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           type="password"
           name="password"
           id="password"
           className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
         <br />
-        <button className="bg-[#E3E4E0] p-2 px-5 rounded-md my-10">
+        <button
+          type="button"
+          onClick={login}
+          className="bg-[#E3E4E0] p-2 px-5 rounded-md my-10"
+        >
           LOGIN
         </button>
         <p className="text-[#7F867B] text-xs">
