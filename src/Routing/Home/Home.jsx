@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Share from "../../assets/img/share.png";
 import Copy from "../../assets/img/copy.png";
 import Setup from "../../config";
+import Tambah from "../../Components/Tambah";
+import IsLogin from "../../Context/IsLogin";
 
 function Home(props) {
   const [puisi, setPuisi] = useState("");
@@ -34,9 +36,10 @@ function Home(props) {
     <article className="flex w-screen p-3 flex-col max-w-3xl  ">
       <section className="flex w-full justify-between">
         <div>
-          <h1 className="font-bold text-[#7F867B] text-xl">{judul}</h1>
+          <h1 className="font-bold text-[#7F867B] text-lg">{judul}</h1>
           <p className="text-[#7F867B] text-xs mt-5">{author}</p>
         </div>
+        <Tambah />
       </section>
       <main className="text-[#7F867B] font-light text-sm mt-10">
         <p className="leading-6 whitespace-pre-wrap">{puisi}</p>

@@ -23,9 +23,16 @@ function Login() {
     })
       .then((res) => {
         if (res.data.message === true) {
-          alert("Login Berhasil");
+          localStorage.setItem("username", res.data.data.username);
+          localStorage.setItem("namaLengkap", res.data.data.namaLengkap);
+          localStorage.setItem("password", res.data.data.password);
+          window.location.href = `${Setup.baseUrl}/`;
         } else {
-          alert("GAGAL BANGGGGG");
+          window.location.href = `${Setup.baseUrl}/`;
+
+          alert(
+            "Username atau Password salah, silahkan coba lagi atau daftar terlebih dahulu"
+          );
         }
       })
       .catch((err) => {
@@ -74,7 +81,7 @@ function Login() {
         />
         <br />
         <button
-          type="button"
+          type="submit"
           onClick={login}
           className="bg-[#E3E4E0] p-2 px-5 rounded-md my-10"
         >
@@ -84,6 +91,12 @@ function Login() {
           Belum punya akun?{" "}
           <Link to={"/signup"} className="text-blue-500 font-semibold">
             DAFTAR
+          </Link>
+        </p>
+        <p className="text-[#7F867B] text-xs mt-1">
+          Atau masuk menggunakan mode{" "}
+          <Link to={"/tamu"} className="text-blue-500 font-semibold">
+            TAMU
           </Link>
         </p>
       </form>

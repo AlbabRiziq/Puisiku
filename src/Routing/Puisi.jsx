@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Copy from "../../src/assets/img/copy.png";
+import Tambah from "../Components/Tambah";
 
 function Puisi() {
   const [puisi, setPuisi] = useState("");
@@ -27,6 +28,7 @@ function Puisi() {
             <p className="text-[#7F867B] text-xs mt-5">{author}</p>
           </div>
           <h3 className="text-[#7F867B] mx-5 print:hidden">Buat Puisi</h3>
+          <Tambah />
         </section>
         <article className="text-[#7F867B] font-light text-sm mt-10">
           <p className="leading-6 whitespace-pre-wrap">{puisi}</p>

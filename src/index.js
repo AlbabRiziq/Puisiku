@@ -8,6 +8,8 @@ import reportWebVitals from "./reportWebVitals";
 import SignUp from "./Routing/SignUp/SignUp";
 import Puisi from "./Routing/Puisi";
 import Login from "./Routing/Login/Login";
+import Home from "./Routing/Home/Home";
+import Create from "./Routing/Create/Create";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,6 +22,8 @@ root.render(
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/tamu" element={<Home />} />
+        <Route path="/tambah" element={<Create />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

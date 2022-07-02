@@ -7,6 +7,7 @@ function SignUp() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [namaLengkap, setNamaLengkap] = useState();
+  const [confirmUsername, setConfirmUsername] = useState();
 
   /// Development (Nek arep production kudu dihapus bre, elingggg!!!!!!!!)
 
@@ -17,6 +18,21 @@ function SignUp() {
   }, [namaLengkap, password, username]);
 
   /////////////
+
+  useEffect(() => {
+    axios
+      .get(`${Setup.apiEndoint}/confirmUsername/${username}`)
+      .then((res) => {
+        if (res.data.message === true) {
+          setConfirmUsername("Username tersedia");
+        } else {
+          setConfirmUsername(
+            "Username tidak tersedia atau sudah digunakan oleh orang lain"
+          );
+        }
+      })
+      .finally(() => {});
+  }, [username]);
 
   const register = () => {
     if (
@@ -36,6 +52,8 @@ function SignUp() {
         },
       }).then((res) => {
         console.log(res);
+        window.location.href = `${Setup.baseUrl}/login`;
+        alert("Silakan login dengan akun yang kamu buat tadi");
       });
     }
   };
@@ -62,8 +80,7 @@ function SignUp() {
           id="username"
           className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
-        <br />
-        <br />
+        <p className="text-xs w-52">{confirmUsername}</p>
         <label htmlFor="nama" className="text-[#7F867B] font-semibold">
           NAMA LENGKAP
         </label>
