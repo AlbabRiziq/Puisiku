@@ -10,6 +10,7 @@ import Puisi from "./Routing/Puisi";
 import Login from "./Routing/Login/Login";
 import Home from "./Routing/Home/Home";
 import Create from "./Routing/Create/Create";
+import Kiriman from "./Routing/Kiriman/Kiriman";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +25,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/tamu" element={<Home />} />
         <Route path="/tambah" element={<Create />} />
+        <Route path="/kiriman" element={<Kiriman />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

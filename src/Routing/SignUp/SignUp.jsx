@@ -1,38 +1,25 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import validator from "validator";
 import Setup from "../../config";
 
 function SignUp() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [namaLengkap, setNamaLengkap] = useState();
-  const [confirmUsername, setConfirmUsername] = useState();
+  const [pesanUsername, setPesanUsername] = useState("");
+  const [canLogin, setCanLogin] = useState(false);
 
   /// Development (Nek arep production kudu dihapus bre, elingggg!!!!!!!!)
 
-  useEffect(() => {
-    console.log(username);
-    console.log(password);
-    console.log(namaLengkap);
-  }, [namaLengkap, password, username]);
+  // useEffect(() => {
+  //   console.log(username);
+  //   console.log(password);
+  //   console.log(namaLengkap);
+  // }, [namaLengkap, password, username]);
 
   /////////////
-
-  useEffect(() => {
-    axios
-      .get(`${Setup.apiEndoint}/confirmUsername/${username}`)
-      .then((res) => {
-        if (res.data.message === true) {
-          setConfirmUsername("Username tersedia");
-        } else {
-          setConfirmUsername(
-            "Username tidak tersedia atau sudah digunakan oleh orang lain"
-          );
-        }
-      })
-      .finally(() => {});
-  }, [username]);
 
   const register = () => {
     if (
@@ -42,19 +29,23 @@ function SignUp() {
     ) {
       alert("HARUS DIISI SEMUA YA BANG");
     } else {
-      axios({
-        url: `${Setup.apiEndoint}/register`,
-        method: "POST",
-        params: {
-          username: username,
-          password: password,
-          namaLengkap: namaLengkap,
-        },
-      }).then((res) => {
-        console.log(res);
-        window.location.href = `${Setup.baseUrl}/login`;
-        alert("Silakan login dengan akun yang kamu buat tadi");
-      });
+      if (!canLogin) {
+        alert("Coba lagi, ada yang salah");
+      } else {
+        axios({
+          url: `${Setup.apiEndoint}/register`,
+          method: "POST",
+          params: {
+            username: username,
+            password: password,
+            namaLengkap: namaLengkap,
+          },
+        }).then((res) => {
+          console.log(res);
+          window.location.href = `${Setup.baseUrl}/login`;
+          alert("Silakan login dengan akun yang kamu buat tadi");
+        });
+      }
     }
   };
 
@@ -73,6 +64,26 @@ function SignUp() {
         <input
           onChange={(e) => {
             setUsername(e.target.value);
+            if (validator.isEmpty(e.target.value)) {
+              setPesanUsername("Username tidak boleh kosong");
+              setCanLogin(false);
+            } else if (validator.contains(e.target.value, "/")) {
+              setPesanUsername("Username tidak boleh mengandung '/'");
+              setCanLogin(false);
+            } else {
+            }
+
+            axios
+              .get(`${Setup.apiEndoint}/confirmUsername/${e.target.value}`)
+              .then((res) => {
+                if (res.data.message === false) {
+                  setPesanUsername("Username tidak tersedia");
+                  setCanLogin(false);
+                } else {
+                  setPesanUsername("Username tersedia");
+                  setCanLogin(true);
+                }
+              });
           }}
           required
           type="text"
@@ -80,7 +91,9 @@ function SignUp() {
           id="username"
           className="bg-[#E3E4E0] px-5 py-2 rounded-lg outline-none w-64"
         />
-        <p className="text-xs w-52">{confirmUsername}</p>
+
+        <p className="text-xs w-64">{pesanUsername}</p>
+        <br />
         <label htmlFor="nama" className="text-[#7F867B] font-semibold">
           NAMA LENGKAP
         </label>

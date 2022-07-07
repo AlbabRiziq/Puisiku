@@ -34,6 +34,7 @@ function Login() {
             "Username atau Password salah, silahkan coba lagi atau daftar terlebih dahulu"
           );
         }
+        window.location.href = `${Setup.baseUrl}/`;
       })
       .catch((err) => {
         alert(
@@ -70,6 +71,7 @@ function Login() {
           PASSWORD
         </label>
         <br />
+
         <input
           onChange={(e) => {
             setPassword(e.target.value);

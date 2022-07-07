@@ -1,54 +1,53 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import Share from "../../assets/img/share.png";
-import Copy from "../../assets/img/copy.png";
 import Setup from "../../config";
 import Tambah from "../../Components/Tambah";
-import Komentar from "../../Components/Komentar/Komentar";
-import Komen from "../../Components/Komen";
+import Share from "../../assets/img/share.png";
+import Copy from "../../assets/img/copy.png";
 import parse from "html-react-parser";
+import Komen from "../../Components/Komen";
 
-function Home(props) {
+function Kiriman() {
   const [puisi, setPuisi] = useState("");
   const [author, setAuthor] = useState();
   const [judul, setJudul] = useState("");
   const [indexPuisi, setIndexPuisi] = useState();
   const [toggleShare, setToggleShare] = useState(true);
+  const [panjang, setPanjang] = useState(0);
 
   useEffect(() => {
     const getKirimanPuisi = async () => {
       const res = await axios.get(`${Setup.apiEndoint}/kirimann/acak`);
       console.log(await res.data);
-      // setPanjang(await res.data.length);
+      setPanjang(await res.data.length);
       setPuisi(await res.data.puisi);
       setAuthor(await res.data.author);
       setJudul(await res.data.title);
       setIndexPuisi(await res.data.length);
     };
     getKirimanPuisi();
-    // console.log(panjang);
+    console.log(panjang);
   }, []);
-  const getPuisi = () => {
+
+  const acak = () => {
     const getKirimanPuisi = async () => {
       const res = await axios.get(`${Setup.apiEndoint}/kirimann/acak`);
       console.log(await res.data);
-      // setPanjang(await res.data.length);
+      setPanjang(await res.data.length);
       setPuisi(await res.data.puisi);
       setAuthor(await res.data.author);
       setJudul(await res.data.title);
       setIndexPuisi(await res.data.length);
     };
     getKirimanPuisi();
-    console.log(indexPuisi);
   };
-
   return (
-    <div className="w-screen ">
-      <article className="flex p-3 flex-col max-w-3xl  ">
+    <div className="w-screen flex items-center justify-center">
+      <article className="flex w-screen p-3 flex-col max-w-3xl  ">
         <section className="flex w-full justify-between">
           <div>
             <h1 className="font-bold text-[#7F867B] text-lg">{judul}</h1>
-            <p className="text-[#7F867B] text-xs mt-5">{author}</p>
+            <p className="text-[#7F867B] text-xs mt-5">Oleh {author}</p>
           </div>
           <Tambah />
         </section>
@@ -57,12 +56,13 @@ function Home(props) {
         </main>
         <div className="flex items-center">
           <button
-            onClick={getPuisi}
+            onClick={acak}
             className="bg-[#E3E4E0] text-xs p-2 px-5 rounded-md my-10 print:hidden text-[#7F867B]"
           >
             ACAK
           </button>
           <Komen />
+
           <button
             onClick={() => {
               setToggleShare(!toggleShare);
@@ -94,9 +94,8 @@ function Home(props) {
           <div></div>
         </div>
       </article>
-      {/* <Komentar /> */}
     </div>
   );
 }
 
-export default Home;
+export default Kiriman;

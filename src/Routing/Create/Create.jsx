@@ -3,10 +3,14 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import Editor from "ckeditor5-custom-build";
 import axios from "axios";
 import Setup from "../../config";
+// import Modal from "../../Components/Modal";
+// import Modal from "../../Components/Modal";
 
 function Create() {
   const [judul, setJudul] = useState("-");
   const [puisi, setPuisi] = useState("-");
+  const [puisiWithHeader, setPuisiWithHeader] = useState();
+  const namaLengkap = localStorage.getItem("namaLengkap");
 
   useEffect(() => {
     axios({
@@ -16,16 +20,44 @@ function Create() {
         username: localStorage.getItem("username"),
         password: localStorage.getItem("password"),
       },
-    })
-      .then((res) => {
-        if (res.data.message === false) {
-          window.location.href = `${Setup.baseUrl}/login`;
-        }
-      })
-      .finally(() => {});
+    }).then((res) => {
+      if (res.data.message === false) {
+        window.location.href = `${Setup.baseUrl}/login`;
+      }
+    });
 
     // console.log(isLoading);
+  }, []);
+
+  useEffect(() => {
+    setPuisiWithHeader(`
+${judul}
+
+Oleh : ${namaLengkap}
+
+
+${puisi}
+
+    `);
   });
+
+  useEffect(() => {
+    console.log(puisiWithHeader);
+  });
+
+  const kirim = () => {
+    axios({
+      url: `${Setup.apiEndoint}/create`,
+      method: "POST",
+      params: {
+        puisi: puisi,
+        title: judul,
+        author: namaLengkap,
+        puisi_with_header: puisiWithHeader,
+        comment: [],
+      },
+    });
+  };
 
   return (
     <div className="flex w-screen  flex-col p-3 md:p-10 lg:p-16 xl:p-20">
@@ -68,7 +100,7 @@ function Create() {
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
-              console.log({ event, editor, data });
+              setPuisi(data);
               setPuisi(data);
             }}
             onBlur={(event, editor) => {
@@ -81,11 +113,13 @@ function Create() {
         </>
       </div>
       <button
+        onClick={kirim}
         type="submit"
         className="bg-[#E3E4E0] p-2 px-5 rounded-md my-10 w-64 m-auto"
       >
         KIRIM
       </button>
+      {/* <Modal /> */}
     </div>
   );
 }

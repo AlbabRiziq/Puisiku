@@ -42,7 +42,7 @@ function App() {
   }
 
   return (
-    <div className="App flex items-center justify-center">
+    <div className="App flex items-center justify-center ">
       {isLogin ? <Home /> : <Login />}
     </div>
   );

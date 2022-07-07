@@ -27,7 +27,6 @@ function Puisi() {
             <h1 className="font-bold text-[#7F867B] text-xl">{judul}</h1>
             <p className="text-[#7F867B] text-xs mt-5">{author}</p>
           </div>
-          <h3 className="text-[#7F867B] mx-5 print:hidden">Buat Puisi</h3>
           <Tambah />
         </section>
         <article className="text-[#7F867B] font-light text-sm mt-10">
